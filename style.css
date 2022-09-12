@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+
+  --bg-color: #040924;
+  --bg-error-color: #F03E3E;
+  --ipt-bg-color: #DCE2E9;
+  --btn-bg-color: #02799D;
+  --box-bg-color: white;
+
+  --hd-color: #0C3440;
+  --lb-color:#00453A;
+    
+  --ipt-color: rgba(73, 80, 87, 0.3);
+  --ph-color: rgba(73, 80, 87, 0.5);
+  
+}
+
+body {
+  background: var(--bg-color);
+  font-family: 'Roboto', sans-serif;
+  
+}
+
+body, input, button { /* Colocamos o font-size e line-height aqui porque se colocarmos só no body, ele não pega no input e no button. Então devemos especificar que é para o input e button também */
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+.container {
+  height: 100vh;
+
+  display: grid;
+  place-content: center; /* usando o "place-content: center" a caixa se ajusta ao centro da tela e respeita o padding colocado no .card */
+}
+
+.card {
+  background: var(--box-bg-color);
+  padding: 4.8rem 6.4rem;
+
+  max-width: 43rem;
+  margin-inline: auto;
+
+  box-shadow: 0px .2rem .4rem rgba(0, 0, 0, 0.1);
+  border-radius: .6rem;
+}
+
+.title {
+  font-size: 3.2rem;
+  line-height: 4.8rem;
+  color: var(--hd-color);
+}
+
+.card h1 {
+  margin-bottom: 3.2rem;
+}
+
+form {
+  width: 30rem;
+}
+
+form label {
+  font-weight: bold;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  color: var(--lb-color);
+
+  display: block; /* o label tem display: inline por padrão, então temos que transformá-lo em display: block para que o margin-bottom seja aplicado */
+  margin-bottom: .8rem;
+}
+
+form input {
+  width: 100%; /* utilizando o width de 100% ele faz a quebra de linha do label com a caixa do input */
+  border: 1px solid var(--ipt-color);
+  background: var(--ipt-bg-color);
+
+  padding: 1.6rem;
+  border-radius: .4rem;
+}
+
+form input:focus {
+  outline: 2px solid var(--btn-bg-color);
+}
+
+form input::placeholder {
+  color: var(--ph-color);
+}
+
+.input-wrapper + .input-wrapper { /* isso significa que vai aplicar um margin-top só entre os elementos .input-wrapper */
+  margin-top: 1.6rem;
+}
+
+form button {
+  width: 100%;
+  margin-top: 3.2rem;
+  padding: 1.6rem;
+
+  font-weight: bold;
+  border: none;
+  background: var(--btn-bg-color);
+  color: var(--box-bg-color);
+
+  display: flex;
+  place-content: center;
+  gap: .8rem;
+  
+  border-radius: .4rem;
+  cursor: pointer;
+
+  transition: all 200ms;
+}
+
+form button:hover {
+  background: #015068;
+}
+
+/* MODAL */
+
+.modal-wrapper {
+  position: absolute; /* precisamos que esse esse modal tenha position absolute para que ele fique em outra camada da tela */
+  inset: 0; /* significa o mesmo que colocarmos (top:0; left:0; bottom:0; right:0) | fazemos isso para que o fundo preto preencha a tela inteira */
+  background: rgba(0, 0, 0, 0.7);
+
+  display: grid;
+  place-content: center;
+
+  margin-top: -12rem;
+
+  opacity: 0;
+  visibility: hidden; /* IMPORTANTE: temos que usar esses dois parâmetros para que a tela desse modal fique escondida (ou invisível) */
+}
+
+.modal-wrapper.open { /* quando a tag tem duas classes (nomes separados por espaço no HTML), acessamos elas separando-as por ponto (.) */
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  position: relative; /* temos que colocar o position do modal como relative para conseguirmos posicionar o svg do close no canto superior da caixa do modal; se não fizermos isso, o position absolute do svg será relativo à página inteira */
+}
+
+.modal button {
+  background: none;
+  border: none;
+
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+
+  cursor: pointer;
+
+  transition: all 200ms;
+}
+
+.modal button:hover {
+  transform: scale(1.1);
+}
+
+/* ALERT-ERROR */
+
+.alert-error {
+  background: var(--bg-error-color);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  text-align: center;
+  font-weight: bold;
+  color: var(--box-bg-color);
+
+  padding: .8rem 0;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-30px);
+  transition: transform .5s;
+}
+
+.alert-error.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* fazemos isso junto ao .alert-error sem o open para que a caixa desça quando for aberta */
+}
